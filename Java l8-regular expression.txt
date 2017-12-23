@@ -1,0 +1,13 @@
+Regular Expression :
+- mechanism of allowing text procesing
+- special text string for performing search, edit or manipulate text and data
+- Regex API available in java.util.regex package
+
+*************************************************************************
+java.util.regex package contains following classes
+1- Pattern
+2- Matcher
+3- PatternSyntaxException
+
+2 - MATCHER class
+-  an instance of this class is the engine that interprets the pattern and performs 
