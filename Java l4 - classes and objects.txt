@@ -1,0 +1,251 @@
+this keyword
+
+- cannot be used to refer static variables
+- has 2 uses :
+1. used to refer the same object
+2. chaining constructors using this
+
+What is meant by chaining constructors?
+-> Constructor chaining is the process of calling one constructor from another constructor with respect to current object
+
+// Java program to illustrate Constructor Chaining
+// within same class Using this() keyword
+class Temp
+{
+    // default constructor 1
+    // default constructor will call another constructor
+    // using this keyword from same class
+    Temp()
+    {
+        // calls constructor 2
+        this(5);
+        System.out.println("The Default constructor");
+    }
+ 
+    // parameterized constructor 2
+    Temp(int x)
+    {
+        // calls constructor 3
+        this(5, 15);
+        System.out.println(x);
+    }
+ 
+    // parameterized constructor 3
+    Temp(int x, int y)
+    {
+        System.out.println(x * y);
+    }
+ 
+    public static void main(String args[])
+    {
+        // invokes default constructor first
+        new Temp();
+    }
+o/p :
+75
+5
+the default constructor
+
+// Java program to illustrate Constructor Chaining
+// within same class Using this() keyword
+// and changing order of constructors
+class Temp
+{
+    // default constructor 1
+    Temp()
+    {
+        System.out.println("default");
+    }
+ 
+    // parameterized constructor 2
+    Temp(int x)
+    {
+        // invokes default constructor
+        this();
+        System.out.println(x);
+    }
+ 
+    // parameterized constructor 3
+    Temp(int x, int y)
+    {
+        // invokes parameterized constructor 2
+        this(5);
+        System.out.println(x * y);
+    }
+ 
+    public static void main(String args[])
+    {
+        // invokes parameterized constructor 3
+        new Temp(8, 10);
+    }
+}
+
+o/p
+default
+5
+80
+
+
+
+********************************************************************************
+
+GARBAGE COLLECTION
+- deallocation of variables(variables are dropped and memory occupied by these variables is released for future reallocation) in java is done by JVM automatically.
+- this process is called garbage collection
+- an object becomes eligible for garbage collection when there are no more references to that object.
+- references that are held in a variable are naturally dropped when the variable goes out of scope. an objet reference can be explicitly dropped by setting the value of a variable whose data type is a reference type to null.
+- garbage collection occurs sporadically. it will not occur simply because an object is no longer used. 
+
+- system.gc() method is called to give an HINT to JVM to invoke garbage collector
+- JVM may not start immediately after system.gc() is called. it may perform some optimization tasks, such as how much memory has been consumed etc..
+
+finalize()
+- if there are some tasks to be performed, those tasks are written in this block.
+- "protected" prevents access to finalize() by code defined outside its class. 
+- to write the code for finalization, override finalize() and write additional code after super.finalize().
+
+class A {
+protected void finalize() {
+super.finalize();
+//Write the code for finalization over here.
+. ...
+}
+}
+
+*************************************************************************************************
+STATIC
+
+1. java static VARIABLE
+-> static variable gets memory only once in class area at the time of class loading
+
+
+2. java static METHOD
+-> static methods belongs to class rather than object of a class
+-> static methods cannot be OVERRIDDEN
+-> in order to call a static method of a class, an object of that class need not be created
+eg : 
+class Calculator()
+{
+add(int a, int b)
+}
+//to call a method of above class, we do not create an object of class 
+Calculator.add(5,10);
+// instead of Calculator c1 = new Calculator();
+//c1.add(5,10);
+
+
+-> static method can access static data member and can change the value of it.
+
+Restrictions for static method:
+	1 - They can only call other STATIC METHODS
+	2 - they must only ACCESS STATIC DATA
+	3 - cannot access NON-STATIC variables and methods
+	4 - They cannot refer to THIS or SUPER in any way 
+	
+3. java static BLOCK
+-> a static block is executed before the main method at the time of classloading
+-> so if we wish to perform any actions before the main method, we can write those actions in the static block
+
+
+- when a member is declared as "static", it can be accessed before any objects of its class are created and without reference to any object.
+- eg: main() is declared as static, as main() is to be called before any objects exist.
+
+what happens when instance variables are declared as static?
+ANS: 
+-> instance variables declared static are global variables.
+ 
+class Usestatic
+
+{   
+ static int a = 3;
+ 
+   static int b;
+    
+ 
+   static void meth(int i)
+
+    {
+      
+  System.out.println("x = "+x);
+
+        System.out.println("a = "+a);
+      
+  System.out.println("b = "+b);
+  
+  }
+    
+
+    static
+
+    {
+      
+  System.out.println("static block initailised");
+        
+b=a*4;
+    
+}
+    
+   
+ public static void main(String args[])
+    
+{
+       
+ meth(42);
+
+    }
+
+}
+
+output :
+static block initailised  // static block will be executed first and value of b set to 12
+42 // main() method executed next
+3 //
+12
+
+**********************************************************************************************
+
+ENUMs
+
+Flow of execution :
+-> when UseStatic class is called, first step is to execute all static statements, that is variables a and b are declared and a is set to 3
+-> then the static block is executed, prints the message, and b is set as a*3
+-> then main() is called
+-> main() in turn calls method meth()
+-> next, all statements under meth() are executed
+
+
+when class is declared as static?
+-> object creation of the class is not needed if the class is static. 
+-> method can be directly called without creating an object of the class usin the following format:
+	classname.method(); 
+
+eg:
+class StaticDemo
+{
+static int a = 40;
+static int b = 90;
+static void callMe()
+{
+	System.out.println("a = "+a);
+}
+}
+
+class StaticByName
+{
+public static void main()
+{
+	//StaticDemo obj = new StaticDemo(); this line is not required since object need not be created for a static class 
+	// obj.callMe();
+	StaticDemo.callMe();
+	System.out.println("b = " +StaticDemo.b());
+}
+}
+
+output :
+40
+90
+
+
+
+   
+ 

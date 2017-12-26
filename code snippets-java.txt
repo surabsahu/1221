@@ -1,0 +1,1196 @@
+1 // filename Main.java
+class Test {
+    protected int x, y;
+}
+ 
+class Main {
+    public static void main(String args[]) {
+        Test t = new Test();
+        System.out.println(t.x + " " + t.y);
+    }
+}
+
+o/p :
+0 0
+// no access related issue here
+protected access specifier allows variables to be accessed from classes in the same package
+as well as subclasses present in other packages.
+Here, since variables are being accessed in the same class, there is no access related issue
+default variables initialise integer variables as 0 in java.
+
+********************************************************************
+
+2 / filename Test.java
+class Test {
+    public static void main(String[] args) {
+        for(int i = 0; 1 ; i++) // error, 1 cannot be written in place of condition
+		{
+            System.out.println("Hello");
+            break;
+        }
+    }
+}
+o/p : compilation error at line 26
+
+
+/ filename Test.java
+class Test {
+    public static void main(String[] args) {
+        for(int i = 0; true; i++) // true/false can be written
+		{
+            System.out.println("Hello");
+            break;
+        }
+    }
+}
+// Output: Hello
+
+**************************************************
+3.
+// filename Main.java
+class Main {
+    public static void main(String args[]) {   
+        System.out.println(fun());
+    } 
+    int fun() {
+        return 20;
+    } 
+}
+
+o/p : compilation error
+fun() is a non-static method
+static main() cannot access non-static methods
+if fun() is declared as static, there will be no compilation error
+
+***************************************************
+4. // filename Test.java
+class Test {
+   public static void main(String args[]) {
+       System.out.println(fun());
+   }
+   static int fun() {
+       static int x= 0; // static local variables are not allowed
+       return ++x;
+   }
+}
+
+o/p:
+variables declared as static are global variables
+
+*********************************************************
+5.
+package main;
+ 
+class Base {
+    public void Print() {
+        System.out.println("Base");
+    }         
+}
+ 
+class Derived extends Base {    
+    public void Print() {
+        System.out.println("Derived");
+    }
+}
+ 
+class Main{
+    public static void DoPrint( Base o ) {
+        o.Print();   
+    }
+    public static void main(String[] args) {
+        Base x = new Base();
+        Base y = new Derived();
+        Derived z = new Derived();
+        DoPrint(x);
+        DoPrint(y);
+        DoPrint(z);
+    }
+}
+o/p:
+Base 	//an object of parent class is created
+Derived	// an object of child class is created
+Derived	// an object of child class is created
+
+*******************************************************
+6. 
+// filename: Test2.java
+class Test1 {   
+    Test1(int x) {
+        System.out.println("Constructor called " + x);
+    }
+}
+  
+// This class contains an instance of Test1 
+class Test2 {    
+    Test1 t1 = new Test1(10);   
+  
+    Test2(int i) { t1 = new Test1(i); } 
+  
+    public static void main(String[] args) {    
+         Test2 t2 = new Test2(5);
+    }
+}
+
+o/p
+Constructor called 10
+Constructor called 5
+
+flow of execution :
+- 
+
+********************************************************
+7.
+public class Test 
+{    
+    int x = 2;
+    Test(int i) { x = i; } 
+    public static void main(String[] args) {    
+         Test t = new Test(5);
+         System.out.println("x = " + t.x);
+    }
+}
+
+o/p :
+//value assigned inside the constructor overwrites the value assigned previously that is 2.
+x=5
+
+*****************************************************
+8. // file name: Main.java
+ 
+class Base {
+    protected void foo() {}
+} 
+class Derived extends Base {
+    void foo() {}
+} 
+public class Main {
+    public static void main(String args[]) {
+        Derived d = new Derived();
+        d.foo();
+    }
+}
+o/p:
+compile error
+// foo() is declared as protected in parent class
+and in child class it is given default access.
+default access is more restrictive than protected.
+and an overridden function cannot be given more restrictive access
+program works fine if in child class it is given public class
+
+**************************************************
+9. // file name: Main.java
+ 
+class Complex {
+    private double re, im;    
+    public String toString() {
+        return "(" + re + " + " + im + "i)";
+    }
+    Complex(Complex c) {
+        re = c.re;
+        im = c.im;
+    }
+}
+ 
+public class Main {
+    public static void main(String[] args) {
+        Complex c1 = new Complex(); // compilation error
+        Complex c2 = new Complex(c1);
+        System.out.println(c2);
+    }
+}
+o/p : compilation error
+// if we defineour parameterized constructor, compiler doesn't construct default constructor
+hence line 194 is not valid.
+if we do not define parematerized constructor, then compiler creates its default constructor
+
+//the above program will compile if we write default constructor
+
+// file name: Main.java
+ 
+class Complex {
+    private double re, im;    
+    public String toString() {
+        return "(" + re + " + " + im + "i)";
+    }
+    Complex()
+    {
+    }
+    
+    Complex(Complex c) {
+        re = c.re;
+        im = c.im;
+    }
+}
+ 
+public class Main {
+    public static void main(String[] args) {
+        Complex c1 = new Complex();
+        Complex c2 = new Complex(c1);
+        System.out.println(c2);
+    }
+}
+o/p:
+(0.0 + 0.0i)
+//since we have not initialised the value for re and im, 0.0 is the default value
+*******************************************************
+10.
+// Main.java
+public class Main
+{
+    public static void main(String args[])
+    {
+        String s1 = "abc";
+        String s2 = s1;
+        s1 += "d";
+        System.out.println(s1 + " " + s2 + " " + (s1 == s2));
+ 
+        StringBuffer sb1 = new StringBuffer("abc");
+        StringBuffer sb2 = sb1;
+        sb1.append("d");
+        System.out.println(sb1 + " " + sb2 + " " + (sb1 == sb2));
+    }
+} //end class
+
+o/p:
+abcd abc false 
+abcd abcd true
+
+Explanation : In Java, String is immutable and string buffer is mutable.
+So string s2 and s1 both pointing to the same string abc.
+And, after making the changes the string s1 points to abcd and s2 points to abc, hence false. 
+While in string buffer, both sb1 and sb2 both point to the same object. 
+Since string buffer are mutable, making changes in one string also make changes to the other string. 
+So both string still pointing to the same object after making the changes to the object (here sb2).
+
+
+//string objects are immutable, i.e. once a string is created, no modifications can be made on them. each time a modification is made, a new object is created, the previous value cannot be overwritten
+Hence,in case of string, s1 is now "abcd", but s2 still points to the previous value of s1 and remains "abc", hence (s1==s2) is false
+
+//whereas in tha case of stringbuffer and stringbuilder, objects are mutable, the initial value is changed when any modifications are made.
+so when sb1 is modified, sb2 also gets modified.
+
+******************************************************
+11. // Main.java
+public class Main
+{
+    public static void main(String args[])
+    {
+        short s = 0;
+        int x = 07;
+        int y = 08; //line 8
+        int z = 112345;
+ 
+        s += z;
+        System.out.println("" + x + y + s);
+    }
+} //end class
+
+o/p:
+compilation error at line 8 
+  
+//any number starting with 0 is treated as an octal number
+********************************************************
+12. 
+class First
+{
+    public First() 
+	{  System.out.println("a"); }
+}
+  
+class Second extends First
+{
+    public Second()  
+	{  System.out.println("b"); }
+}
+  
+class Third extends Second
+{
+    public Third()   
+	{  System.out.println("c"); }
+}
+  
+public class MainClass
+{
+    public static void main(String[] args)
+    {
+        Third c = new Third();
+    }
+}	
+ 
+o/p:
+a
+b 
+c 
+//an object of Third is created. Before default constructor of Third(which is a child class)
+is called, deafult constructor of its parent class is called and so on...
+
+
+class First
+{
+    public First() 
+    {  System.out.println("a"); }
+}
+  
+class Second extends First
+{
+    public Second() 
+    {  System.out.println("b"); }
+}
+  
+class Third extends Second
+{
+    
+    public Third(int i )
+    {
+        System.out.println(i );
+    }
+}
+  
+public class MainClass
+{
+    public static void main(String[] args)
+    {
+        Third c = new Third(5);
+    }
+}
+
+o/p:
+a
+b 
+5
+
+flow of execution :
+- object of Third is created using parameterised constructor
+- before parameterised constructor is executed, default construtor of parent class will be executed and so on...
+ 
+**************************************************************************
+13. 
+class First
+{
+    int i = 10;
+  
+    public First(int j)
+    {
+        System.out.println(i); 
+        this.i = j * 10;
+    }
+}
+  
+class Second extends First
+{
+    public Second(int j)
+    {
+        super(j); 
+        System.out.println(i); 
+        this.i = j * 20;
+    }
+}
+  
+public class MainClass
+{
+    public static void main(String[] args)
+    {
+        Second n = new Second(20); 
+        System.out.println(n.i);
+    }
+o/p:
+10
+200
+400
+
+flow of execution :
+- object of Second is created with argument 20
+- with super(), parent class is called
+- sopln(i) will print 10
+- i is now j*10 = 200
+- now it comes to child class and value of i is 200 and j=20
+- print i=200 and i becomes j*20 = 20*20=400 
+- sopln of main will print 400
+******************************************************
+14.
+import java.util.*; 
+class I 
+{
+    public static void main (String[] args) 
+    {
+        Object i = new ArrayList().iterator(); 
+        System.out.print((i instanceof List) + ", "); 
+        System.out.print((i instanceof Iterator) + ", "); 
+        System.out.print(i instanceof ListIterator); 
+    } 
+}
+o/p:
+false, true,false
+
+explanation :
+- iterator() method returns an iterator over the elements in the list in proper sequence, 
+it doesn't return a List or a ListIterator object.
+
+*********************************************************
+15. 
+class ThreadEx extends Thread
+{
+    public void run()
+    {
+        System.out.print("Hello...");
+    }
+    public static void main(String args[])
+    {
+        ThreadEx T1 = new ThreadEx();
+        T1.start();
+        T1.stop();
+        T1.start();
+    }
+}
+o/p:
+run time exception IllegalThreadStateExeption
+//thread cannot be started twice
+
+*******************************************************
+16.
+public class Calculator
+{
+    int num = 100;
+    public void calc(int num)  
+	{ this.num = num * 10;  }
+    public void printNum()     
+	{ System.out.println(num); }
+ 
+    public static void main(String[] args)
+    {
+        Calculator obj = new Calculator();
+        obj.calc(2);
+        obj.printNum();
+    }
+}
+o/p:
+20
+// here, class instance variable is num
+and local variable name is also num
+so to refer to class instance variable, this.num is used
+*********************************************************
+17.
+public class MyStuff
+{
+    String name;
+ 
+    MyStuff(String n) {  name = n;  }
+ 
+    public static void main(String[] args)
+    {
+        MyStuff m1 = new MyStuff("guitar");
+        MyStuff m2 = new MyStuff("tv");
+        System.out.println(m2.equals(m1));
+    }
+ 
+    @Override
+    public boolean equals(Object obj)
+    {
+        MyStuff m = (MyStuff) obj;
+        if (m.name != null)  { return true;  }
+        return false;
+    }
+}
+o/p:
+true and Mystuff does NOT fulfill the Object equals() contract
+
+********************************************************
+18.
+class Alpha
+{
+    public String type = "a ";
+    public Alpha() {  System.out.print("alpha "); }
+}
+ 
+public class Beta extends Alpha
+{
+    public Beta()  
+	{ //default constructor  
+	System.out.print("beta ");  
+	}
+ 
+    void go()
+    {
+        type = "b ";
+        System.out.print(this.type + super.type);
+    }
+ 
+    public static void main(String[] args)
+    {
+        new Beta().go();
+    }
+}
+o/p:
+alpha
+beta
+b b 
+*****************************************************
+19.
+public class Test
+{
+    public static void main(String[] args)
+    {
+        StringBuilder s1 = new StringBuilder("Java");
+        String s2 = "Love";
+        s1.append(s2);
+        s1.substring(4);
+        int foundAt = s1.indexOf(s2);
+        System.out.println(foundAt);
+    }
+}
+o/p:4
+
+*******************************************************
+20.
+class Writer
+{
+    public  static void write()
+    {
+        System.out.println("Writing...");
+    }
+}
+class Author extends Writer
+{
+    public  static void write()
+    {
+        System.out.println("Writing book");
+    }
+}
+ 
+public class Programmer extends Author
+{
+    public  static void write()
+    {
+        System.out.println("Writing code");
+    }
+ 
+    public static void main(String[] args)
+    {
+        Author a = new Programmer();
+        a.write();
+    }
+}
+o/p:
+writing book
+
+// static methods CANNOT be overridden.
+since a is an object with Author referenced type, write() method of Author is called.
+if Author does not have write method, it will call it's parent class write() method
+*********************************************************************
+21.
+class Person 
+{ 
+    private void who()
+    {
+        System.out.println("Inside private method Person(who)");
+    }
+  
+    public static void whoAmI()
+    {
+        System.out.println("Inside static method, Person(whoAmI)");
+    }
+  
+    public void whoAreYou()
+    {
+        who();
+        System.out.println("Inside virtual method, Person(whoAreYou)");
+    }
+}
+ 
+class Kid extends Person
+{ 
+    private void who()
+    {
+        System.out.println("Kid(who)");
+    }
+  
+    public static void whoAmI()
+    {
+        System.out.println("Kid(whoAmI)");
+    }
+  
+    public void whoAreYou()
+    {
+        who();
+        System.out.println("Kid(whoAreYou)");
+    }
+}
+public class Gfg
+{
+    public static void main(String args[]) 
+    {
+        Person p = new Kid();  //upcasting, apart from being a kid, p can also inherit properties from Person as it is a subclass 
+        p.whoAmI(); 
+        p.whoAreYou(); 
+    }
+}
+
+o/p:
+Inside static method, Person(whoAmI) // since static methods cannot be overridden, whoAmI method of child class is not executed
+Kid(who)
+Kid(whoAreYou)
+// the 2nd and 3rd line get printed because p simply executes methods of its own class. it has nothing to do with its parent class
+
+*********************************************************
+22.
+class GfG
+{
+    public static void main(String args[])
+    {
+        try
+        {
+            System.out.println("First statement of try block");
+            int num=45/3;
+            System.out.println(num);
+        }
+        catch(Exception e)
+        {
+            System.out.println("Gfg caught Exception");
+        }
+        finally
+        {
+            System.out.println("finally block");
+        }
+        System.out.println("Main method");
+    }
+}
+o/p:
+First statement of try block
+15
+finally block
+Main method
+*****************************************************
+23.
+class One implements Runnable 
+{
+    public void run() 
+    {
+        System.out.print(Thread.currentThread().getName());
+    }
+}
+class Two implements Runnable 
+{
+    public void run() 
+    {
+        new One().run();
+        new Thread(new One(),"gfg2").run();
+        new Thread(new One(),"gfg3").start();
+    }
+}
+class Three 
+{
+    public static void main (String[] args) 
+    {
+        new Thread(new Two(),"gfg1").start();
+    }
+
+o/p:
+refer program 4 of set 8- geeksforgeeks.com
+**************************************************
+24. 
+class Gfg
+{
+    // constructor
+    Gfg()
+    {
+        System.out.println("Geeksforgeeks");
+    }
+     
+    static Gfg a = new Gfg(); //line 8
+ 
+    public static void main(String args[])
+    {
+        Gfg b; //line 12
+        b = new Gfg();
+    }
+}
+o/p:
+Geeksforgeeks // printed because of static variable a. When a class loads, static variables are called and they are called only once.
+Geeksforgeeks // printed because of variable b 
+********************************************************
+25. 
+class Gfg
+{
+    static int num;
+    static String mystr;
+ 
+    // constructor
+    Gfg()
+    {
+        num = 100;
+        mystr = "Constructor";
+    }
+ 
+    // First Static block
+    static
+    {
+        System.out.println("Static Block 1");
+        num = 68;
+        mystr = "Block1";
+    }
+ 
+    // Second static block
+    static
+    {
+        System.out.println("Static Block 2");
+        num = 98;
+        mystr = "Block2";
+    }
+ 
+    public static void main(String args[])
+    {
+        Gfg a = new Gfg();
+        System.out.println("Value of num = " + a.num);
+        System.out.println("Value of mystr = " + a.mystr);
+    }
+}
+o/p:
+static block 1 // static blocks are the first blocks to be executed when a class is loaded
+static block 2 
+value of num = 100 
+value of constructor = constructor	
+
+********************************************************
+26. 
+class superClass
+{
+    final public int calc(int a, int b)
+    {
+        return 0;
+    }
+}
+class subClass extends superClass
+{
+    public int calc(int a, int b)
+    {
+        return 1;
+    }
+}
+public class Gfg
+{
+    public static void main(String args[])
+    {
+        subClass get = new subClass();
+        System.out.println("x = " + get.calc(0, 1));
+    }
+}
+o/p:
+compilation error
+// final method cannot be overridden
+*******************************************************
+27. 
+public class Gfg
+{
+    public static void main(String[] args)
+    {
+        Integer a = 128, b = 128;
+        System.out.println(a == b);
+ 
+        Integer c = 100, d = 100;
+        System.out.println(c == d);
+    }
+}
+o/p:
+false
+true
+
+In the source code of Integer object we will find a method ‘valueOf’ in which we
+can see that the range of the Integer object lies from IntegerCache.low(-128) to IntegerCache.high(127). 
+Therefore the numbers above 127 will not give the expected output. The range of 
+IntegerCache can be observed from the source code of the IntegerCache class. 
+Please refer this for details.
+ 
+*****************************************************
+ 
+GARBAGE COLLECTION
+28.  
+public class Test
+{
+    public static void main(String[] args) throws InterruptedException
+    {
+        String str = new String("GeeksForGeeks");
+             
+        // making str eligible for gc
+        str = null; 
+             
+        // calling garbage collector
+        System.gc(); 
+             
+        // waiting for gc to complete
+        Thread.sleep(1000); 
+     
+        System.out.println("end of main");
+    }
+ 
+    @Override
+    protected void finalize() 
+    {
+        System.out.println("finalize method called");
+    }
+}
+
+o/p:
+end of main
+finalize() is a method of Test class and not string class
+and str is a String class object not the Test class object
+
+*************************************************
+29. 
+public class Test
+{
+    public static void main(String[] args) throws InterruptedException
+    {
+        Test t = new Test();
+             
+        // making t eligible for garbage collection
+        t = null; 
+             
+        // calling garbage collector
+        System.gc(); 
+             
+        // waiting for gc to complete
+        Thread.sleep(1000); 
+     
+        System.out.println("end main");
+    }
+ 
+    @Override
+    protected void finalize() 
+    {
+        System.out.println("finalize method called");
+        System.out.println(10/0);
+    }
+     
+}
+
+o/p:
+finalize method called
+end main
+
+explanation :
+when Garbage Collector calls finalize() method on an object, 
+it ignores all the exceptions raised in the method and program will terminate normally.
+
+*********************************************************
+30. 
+public class Test
+{
+    static Test t ;
+     
+    static int count =0;
+     
+    public static void main(String[] args) throws InterruptedException
+    {
+        Test t1 = new Test();
+             
+        // making t1 eligible for garbage collection
+        t1 = null; // line 12
+             
+        // calling garbage collector
+        System.gc(); // line 15
+             
+        // waiting for gc to complete
+        Thread.sleep(1000); 
+     
+        // making t eligible for garbage collection,
+        t = null; // line 21
+             
+        // calling garbage collector
+        System.gc(); // line 24
+     
+        // waiting for gc to complete
+        Thread.sleep(1000); 
+             
+        System.out.println("finalize method called "+count+" times");
+         
+    }
+     
+    @Override
+    protected void finalize() 
+    { 
+        count++;
+         
+        t = this; // line 38
+             
+    }
+     
+}
+
+o/p:
+finalize method is called 1 times
+
+***************************************************
+31. 
+public class Test
+{
+    public static void main(String[] args)
+    {
+        // How many objects are eligible for 
+        // garbage collection after this line?
+        m1();  // Line 5
+    }
+ 
+    static void m1() 
+    {
+        Test t1 = new Test();
+        Test t2 = new Test();
+    } 
+}
+
+how many objects eligible for garbage collection? 
+ans : 2 
+
+*****************************************************
+32.
+public class Test
+{
+    public static void main(String [] args) 
+    {
+        Test t1 = new Test();
+        Test t2 = m1(t1); // line 6
+        Test t3 = new Test();
+        t2 = t3; // line 8
+         
+    }
+     
+    static Test m1(Test temp) 
+    {
+        temp = new Test();
+        return temp;
+    }
+}
+
+how many objects eligible for garbage collection? 
+ans : 1 
+
+********************************************************
+********************************************************
+*********************************************************
+*********************************************************
+ 33. 
+public class Base
+{
+    private int data;
+ 
+    public Base()
+    {
+        data = 5;
+    }
+ 
+    public int getData()
+    {
+        return this.data;
+    }
+}
+ 
+class Derived extends Base
+{
+    private int data;
+    public Derived()
+    {
+        data = 6;
+    }
+    private int getData()
+    {
+        return data;
+    }
+ 
+    public static void main(String[] args)
+    {
+        Derived myData = new Derived();
+        System.out.println(myData.getData());
+    }
+}
+
+o/p:
+compilation error
+// overridden method in subclass cannot be more restrictive than method in subclass
+
+****************************************************
+34. 
+public class Base
+{
+    private int multiplier(int data)
+    {
+        return data*5;
+    }
+}
+ 
+class Derived extends Base
+{
+    private static int data;
+    public Derived()
+    {
+        data = 25;
+    }
+    public static void main(String[] args)
+    {
+        Base temp = new Derived();
+        System.out.println(temp.multiplier(data));
+    }
+}
+
+o/p:
+compile time error
+
+multiplier method is declared as private and therefore, not inherited by child class.
+child class object can thus not access multiplier method
+
+****************************************************
+35. 
+public class javaclass
+{
+    static
+    {
+        System.out.printf("%d", 1);
+    }
+    static
+    {
+        System.out.printf("%d", 2);
+    }
+    static
+    {
+        System.out.printf("%d", 3);
+    }
+    private static int myMethod()
+    {
+        return 4;
+    }
+    private int function()
+    {
+        return 5;
+    }
+ 
+    public static void main(String[] args)
+    {
+        System.out.printf("%d", (new javaclass()).function() + myMethod());
+    }
+}
+
+o/p:
+1239
+
+**************************************************
+36. 
+public class Test
+{
+    private static int value = 20;
+    public int s = 15;
+    public static int temp = 10;  
+    public static class Nested
+    {  
+      private void display()
+      {
+          System.out.println(temp + s + value);
+      }  
+    }  
+      
+    public static void main(String args[])
+    {  
+      Test.Nested inner = new Test.Nested();  
+      inner.display();  
+    } 
+}
+
+o/p: compilation error
+
+a static member CANNOT access a non-static member 
+objet of Test.Nested (which is static) cannot access variable s 
+
+*****************************************************
+37. 
+import java.io.*;
+public class Test
+{
+    public void display() throws IOException
+    {
+        System.out.println("Test");
+    }
+ 
+}
+ 
+class Derived extends Test
+{
+    public void display() throws IOException
+    {
+        System.out.println("Derived");
+    }
+    public static void main(String[] args) throws IOException
+    {
+        Derived object = new Derived();
+        object.display();
+    }
+}
+
+o/p:
+Derived
+
+**********************************************
+38. 
+public class Test extends Thread
+{
+    public void run()
+    {
+        System.out.printf("Test ");
+    }
+    public static void main(String[] args)
+    {
+        Test test = new Test();
+        test.run();
+        test.start();
+    }
+}
+
+o/p:
+Test Test
+
+test.run() executes the run method. test.start() creates a new 
+thread and executes the overriden run method of the Thread class. The 
+Thread.start() method always starts a new thread, and
+the entry point for this thread is the run() method. If you are calling run() 
+directly it will execute in the same thread BUT it is always recommendable logically calling 
+Thread.start() to start a new thread of execution followed by the run() method.
+
+*******************************************************
+39. 
+public class Test
+{
+    try
+    {
+        public Test()
+        {
+            System.out.println("GeeksforGeeks");
+            throw new Exception();
+        }
+    }
+    catch(Exception e)
+    {
+        System.out.println("GFG");
+    }
+    public static void main(String[] args)
+    {
+        Test test = new Test();
+    }
+}
+o/p: compilation error
+// constructors cannot be enclosed in try catch block
+
+**********************************************************
+40.
+8) Which of the following are true about constructor declaration?
+
+a) Constructors can be declared final.
+b) Constructors can be surrounded by try/catch blocks.
+c) Constructor cannot throw exception.
+d) Constructors can hold synchronized code(so that each thread can access constructor sequentially).
+
+Ans: (d)
+Explanation: Constructors allows a sequential access of data between threads.
+
+***************************************************************
+41.
+
+
+
+ 
+ 

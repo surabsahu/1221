@@ -1,0 +1,55 @@
+Different types of streams:
+1. byte streams : to perform input and output of 8-bit bytes.
+2. character streams : 
+3. Buffered streams : read data from a memory area known as a buffer, and native input API is called only when buffer is empty
+					  similarly, it writes to a memory area known as buffer, and native output API is called only when buffer is full.
+4. Data streams : support binary i/o of primitive data type values(boolean, char, byte, short, int, long, float, double) and String values
+5. Object streams
+6. Scanning and formatting : allows a program to read and write formatted text
+
+********************************************************
+There are 2 abstract classes :
+1. InputStream
+	1. FileInputStream
+	2. PipedInputStream
+	3. FilterInputStream
+	4. ByteArrayInputStream
+	5. SequenceInputStream
+	6. StringBufferInputStream
+	7. ObjectInputStream
+	
+	METHODS:
+		-> close(): closes Input stream and releases any system resources associated with the stream
+		-> int read(): reads next byte of data from input stream
+		-> int read(byte[] b)
+				reads some number of bytesfrom the input stream and stores them into buffer array b
+		-> int read(byte[] b,int off, int len):
+				reads up to len bytes of data from the input stream into an array of bytes
+				
+		
+2. OutputStream
+	1. FileOutputStream
+	2. PipedOutputStream
+	3. FilterOutputStream 
+	4. ByteArrayOutputStream 
+	5. ObjectOutputStream 
+	
+	METHODS:
+		-> close(): closes this output stream and releases any system resources associated with this stream
+		-> flush(): flushes this output stream and forces any buffered output bytes to be written out
+		-> write(byte[] b)
+		-> write(byte[] b, int off, int len)
+		-> write(int b)
+		
+		
+	
+
+
+
+
+
+
+
+
+Object Serialization
+	

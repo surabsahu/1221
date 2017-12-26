@@ -1,0 +1,6 @@
+what is unit testing?
+- process of testing individual subprograms, subroutines or procedures to compare function of the module
+to its specifications is called unit testing
+
+unit testing is also called TDD( Test Driven Development)
+- in TDD, you write unit tests before writing the application functionality

@@ -1,0 +1,11 @@
+ABSTRACT CLASS
+- provides common behaviour across a set of subclasses
+- abstract methods are declared but may not defined
+- abstract methods don't have an implementation
+- a class is declared as abstract if even one of its methods are abstract
+
+**************************************************************************
+INTERFACE
+- special kind of class which consist of only constants and method signatures(abstract methods)
+- essentially a collection of constants and abstract methods
+- 

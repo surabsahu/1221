@@ -1,0 +1,49 @@
+***************************EXCEPTION HANDLING************************************
+
+what do you mean by throwing an exception?
+-> when an error occurs within a java method, the method creates an exception object and hands it off to the runtime system.
+   This process is known as throwing an exception.
+   The exception object contains information about the exception, including its type and state of program when the error occurred.
+
+what do you mean by catching an exception?
+-> to catch an exception is to take appropriate action to deal with the exception.
+
+***all exceptions are derived from the class java.lang.Throwable.class. Throwable class has 2 subclasses:Exception and Error
+
+Exceptions are of 2 types:
+
+CHECKED EXCEPTIONS : All classes that inherit from Exception class except the RuntimeException are called checked exceptions. 
+		     The compiler checks each method call and method declaration to determine whether the method throws checked exceptions.
+		     If so, compiler ensures that the checked exception is caught or is declared in a throws clause.	
+		    they are checked by the compiler at the time of compilation.
+			considered non-fatal
+1. ClassNotFoundException 
+2. CloneNotSupportedException
+3. IllegalAccessException
+4. InstantiationException
+5. InterruptedException
+6. NoSuchFieldException
+7. NoSuchMethodException
+8. SQLException
+
+UNCHECKED/RUNTIME EXCEPTIONS
+			considered fatal
+			not detected at the time of compilation
+			encountered only when the program is in execution
+			called unchecked because the compiler does not check to see if a method handles or throws these exceptions.
+
+1. ArithmeticException
+2. NullPointerException
+3. ArrayStoreexception
+4. ClassCastException
+5. IndexoutOfBoundsException
+6. ArrayIndexoutOfBoundsException
+7. StringIndexoutOfBoundsException
+8. NegativeArraySizeException
+9. NumberFormatException
+10. IllegalArgumentException
+11. IllegalStateException
+12. IllegalThreadStateException   
+
+
+***finally block WITHOUT A TRY BLOCK gives a compile time error

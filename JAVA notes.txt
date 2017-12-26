@@ -1,0 +1,82 @@
+JAVA notes
+
+how does java implement polymorphism
+1 - method overloading: when 2 or more methods within the same class share the same name, with different parameter declarations or different return type ,
+the method is said to be overloaded, and the process is called method overloading.
+
+how method overloading shows polymorphism?
+ANS : because with the use of method overloading, java can implement "one interface, multiple methods".
+eg: To perform a single function of finding the absolute value of a number,
+In C : abs() is used to find absolute value of integer
+	labs() is used to find absolute value of long integer
+	fabs() is used to find absolute value of floating point number
+But in java, we have a single method abs(), and it can be overloaded to use for different input types 
+
+2 - 
+
+
+
+*******************************************************************************
+
+ACCESS SPECIFIERS
+
+1-default : CLASS, FIELD, METHOD, CONSTRUCTOR
+2-public : CLASS , FIELD, METHOD, CONSTRUCTOR	
+3-private : FIELD, METHOD, CONSTRUCTOR
+4-protected(applies only when inheritance is involved) : FIELD, METHOD, CONSTRUCTOR
+
+***PUBLIC (least restrictive):
+- CLASS, fields, methods, constructors specified as "public" , can be accessed by any other class whether in same package or outside package.
+
+***PRIVATE (most restrictive):
+- when a field, methods or constructor is specfied as "private", then that member can be accessed by any of the members of its class
+- when a field, methods or constructor is mentioned "private", it cannot be accessed from outside the class directly, it must be accessed through its public methods.
+- i.e. a private variable can be accessed from outside the class by using getters and setters.
+- a CLASS CANNOT BE SPECIFIED AS PRIVATE
+eg:
+
+public class Test()
+{
+public int a;
+private int b;
+
+public void setB(int i)
+{
+c = i ;/
+}
+
+public void getB()
+{
+	return b;
+}
+
+class AccessTest()
+{
+Test test = new Test();
+
+test.a = 10;
+test.b = 20;	//private variable cannot be accessed directly
+
+test.setB(5);
+
+System.out.println("a is "+test.a+"b is "+test.getB());
+}
+
+therefore, main() is always specified as "public" because it is called by code that is outside the code.
+
+***DEFAULT : 
+- when no access specifier is mentioned with the class, then by default the members of the class are public and can be accessed by others classes within the package, 
+- it cannot be accessed from outside the package.
+- default modifier is not used with FIELDS and METHODS within an interface.
+- default access specifier CAN ONLY BE USED FOR A CLASS
+
+***PROTECTED
+- field, methods or constructor declared as protected in a superclass, can be accessed by a class from outside the package, only if the class is a subclass of the superclass
+- if a class in the same package needs to access field, methods or constructor declared as protected, then that class need not be a subclass
+- A CLASS CANNOT BE DECLARED AS PROTECTED.
+
+*****************************************************************************************************
+
+
+
+

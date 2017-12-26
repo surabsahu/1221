@@ -1,0 +1,86 @@
+Object class
+- every class in java implicitly extends Object class
+- object super class is a cosmic super class
+- 
+
+***************************************************************************
+WRAPPER CLASS
+- wrapper classes are MUTABLE
+
+Integer Wrapper Class
+methods:
+	intValue(): retireves primitive int value of the Integer object
+	compareTo(): compares 2 integer objects
+	parseInt(): static method used to convert String value to int
+	toString(): retrieves as string value from Integer object
+	isNaN(): check whether given values are number or not
+
+Constant:
+	MAX_VALUE : reresents largest value of integer class range
+	MIN_VALUE : reresents lowest value of integer class range
+
+
+***********************************************************
+STRING HANDLING
+- string is handled as an object of class String and not as an array of characters
+- string objects are IMMUTABLE ( once a string is created, characters cannot be changed)
+- since String is an object, it has methods using which various operations can be performed on the String objects
+eg : concatenation, comaprison of 2 strings, searching of a substring
+- since string objects are immutable, each time an operation is performed on the object,
+the original object is not modified. Instead, a new String object is created that contains the modifications.
+The original string remains unchanged.
+ 
+Difference between .equals() and ==
+- str1.equals(str2) compares the 2 strings character wise
+- str1==str2 comapres 2 object references to see whether they refer to the same instance.
+
+**********************************************************
+STRINGBUFFER class
+- mutable (changes can be made in the string once created)
+- StringBuffer and StringBuilder both are mutable
+
+
+********************************************************************
+STRINGBUILDER class
+- MUTABLE
+- NOT THREAD SAFE (methods are not synchronized)
+- runs faster than StringBuffer
+- StringBuilder is an equivalent class as of StringBuffer designed for use by a single thread.
+
+**********************************************************************
+
+DATE AND TIME API
+- java.time package
+- LocalDate: represents date only
+- LocalTime: represents time only
+- LocalDateTime : represents both date and time
+- ZonedDateTime : represents date and time if a time zone is important
+
+Methods:
+duration(): amount of time between 2 dates including nanosecond precision
+period(): returns duration between 2 dates in terms of days, months and years
+
+This API has included 2 enums to represet day and month constant respectively 
+1. DayOfWeek
+2. Month
+
+***all classes include parse and format method to support parsing and formatting of date and time.
+
+Formatting and Parsing Date and Time
+- To either format or parse, the first step is to create instance of DateTimeFormatter
+*****************************************************************************
+INSTANT CLASS
+- an object of instant represents point on the timeline
+- useful to represent machine timestamp
+- a value returned from the Instant class counts time beginning from 1st Jan 1970. This value is known as EPOCH.
+- an Instant at epoch is representated by 0
+- Instants after epoch are positive and Instants before epoch are negative 
+
+- static method "now" of Instant class is used to represent current time
+
+
+
+*********************************************************************
+
+Best Practices:
+- use StringBuffer for appending
