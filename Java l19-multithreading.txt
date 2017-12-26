@@ -1,0 +1,40 @@
+THREAD:
+-> thread execution is a lightweight process, and process execution is a heavyweight process
+-> threads are easily created whereas processes are not
+-> a thread is a single sequential flow of control within a process
+
+THREAD PRIORITY
+min_priority : 1
+norm_priority : 5
+max-priority : 10
+
+-> priority level can be set by the method setPriority(priority_level)
+-> deafult priority of a thread is 5(norrm_priority)
+-> thread scheduler schedules the threads as per priority
+-> the order of execution is not guaranteed, it depends on the order in which threads are placed in the runnable queue.
+-> However, when there is a competitive situation, where a thread is alreadt executing and a thread with higher priority level seeks execution, then the resource is preempted
+-> once a thread has finished it's turn, it moves to the end of the line of the runnable pool and waits until it eventually gets to the front of the line.
+
+Methods in thread class:
+- run() **the only method available in runnable interface 
+- start() - reaches ready state
+- sleep()
+- join()
+- stop() - 
+- getName() - returns thread name in string format
+- isAlive()
+- getPriority() - obtain thread's priority
+- currentThread() - returns current thread object
+
+Common exceptions in threads:
+1. InterruptedException: thrown when the waiting or sleeping state is disrupted by another thread
+2. IllegalStateException: thrown when the thread is tried to start that is already started
+
+***to dreate a new thread, you either extend Thread class or implement Runnable interface
+
+LIFE CYCLE OF A THREAD:
+new : when a thread is created using new() it is in new state
+runnable : when the thread is in runnable state after invocation of start() method, but the thread scheduler has not selected it to be the running thread yet
+waiting :	wait()		notify()
+timed waiting :	sleep()
+terminated : a runnable enters the terminated state when it completes its task or otherwise terminates.
