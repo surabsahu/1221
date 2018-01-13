@@ -1,0 +1,179 @@
+Q31
+
+
+public class Speak {
+	public static void main(String[] args) {
+		Speak speakIt = new Tell(); //object of Tell class created iwth reference to Speak
+		Tell tellIt = new Tell();	//object of Tell created 
+		
+		speakIt.tellItLikeItIs();					//will not compile because method tellItLikeItIs is undefined for the class Speak. Speak class does not implements interface Truth 
+		(Truth)speakIt.tellItLikeItIs();			// will not compile. Truth cannot be resolved to a variable
+		((Truth)speakIt).tellItLikeItIs();			//compiles. even though Speak does not implement Truth, using this syntax Speak object can use interface methods
+		
+		tellIt.tellItLikeItIs();					//compiles
+		(Truth)tellIt.tellItLikeItIs();				//not compile. Truth cannot be resolved to a variable
+		((Truth)tellIt).tellItLikeItIs();			//compiles
+	}
+}
+
+class Tell extends Speak implements Truth{
+	public void tellItLikeItIs(){
+		System.out.println("Right on");
+	}
+}
+
+
+
+public interface Truth {
+	public void tellItLikeItIs();
+}
+
+
+**********************************************************************
+Q32
+
+
+public class MyFor3 {
+	public static void main(String[] args) {
+		int[] xx = null;
+		for(int ii:xx){
+			System.out.println(ii);
+		}
+	}
+}
+
+o/p:
+Exception in thread "main" java.lang.NullPointerException
+	at MyFor.main(MyFor.java:5)
+
+	Ans : C
+	
+**********************************************************************
+
+Q33
+
+
+public abstract  class Dog {	//class containing abstract method MUST be explicitly declared as abstract
+	public abstract void bark();
+}
+
+
+
+public class Poodlee extends Dog{
+	public void bark(){
+		System.out.println("woof");
+	}
+}
+Ans : C
+
+***************************************************************
+Q34
+
+class Cake {
+	int model; 
+	String flavor; 
+	Cake() { 			//constructor
+		model = 0;
+		flavor = "Unknown";
+	}
+}
+
+public class Test {
+	public static void main(String[] args) { 
+		Cake c = new Cake();
+		bake1(c);
+		System.out.println(c.model + " " + c.flavor); //1200 strawberry
+		bake2(c);
+		System.out.println(c.model + " " + c.flavor); 
+	}
+
+
+	public static Cake bake1(Cake c) { 	//static methods cannot be overridden
+		c.flavor = "Strawberry";
+		c.model = 1200;
+		return c;
+	}
+
+	public static void bake2(Cake c) {
+		c.flavor = "Chocolate";
+		c.model = 1230;
+		return;
+	}
+}
+
+o/p:
+1200 Strawberry
+1230 Chocolate  // value is getting store in the object even though the method does not return anything
+
+******************************************************************
+
+Q37
+
+public class Access {
+	private int x=0;
+	private int y=0;
+	
+	public static void main(String[] args){
+		Access accApp= new Access();
+		accApp.printThis(1,2);
+		accApp.printThat(3,4);
+	}
+	
+	public void printThis(int x, int y){
+		x=x;
+		y=y;
+		System.out.println(this.x + " "+ this.y);	//0,0
+	}
+	public void printThat(int x, int y){
+		this.x=x;
+		this.y=y;
+		System.out.println(this.x + " "+this.y);	//3,4
+	}	
+}
+
+o/p:
+0 0 
+3 4 
+
+*******************************************************************
+
+Q38
+
+
+**************************************************************
+Q49
+
+
+public class ScopeTest {
+	int z;
+	public static void main(String[] args) {
+		ScopeTest myScope = new ScopeTest();
+		int z=6;
+		System.out.println(z);		//6 as assigned by local variable z
+		myScope.doStuff();
+		System.out.println(z);		//local value of z is printed
+		System.out.println(myScope.z);	//???????????????????
+
+	}
+	void doStuff(){
+		int z=5;
+		doStuff2();
+		System.out.println(z);		// local value of z=5 is printed
+	}
+	void doStuff2(){
+		z=4;
+	}
+}
+
+o/p
+6
+5
+6
+4	????????????????????????
+
+***************************************************************
+
+
+
+
+
